@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Request, Response, NextFunction} from 'express';
 import { userRouter } from './users/users.js';
 
 const port = 8000;
@@ -30,7 +30,7 @@ app.get('/hello', (req, res) => {
 
 app.use('/user', userRouter);
 
-app.use((err, req, res, next) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(401).send(err.message)
 })
 
