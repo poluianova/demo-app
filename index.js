@@ -18,11 +18,21 @@ const app = express();
 //     res.send('Привет, POST')
 //   })
 
+app.use((req, res, next) => {
+  console.log('Date time ', Date.now())
+  next();
+})
+
 app.get('/hello', (req, res) => {
-  res.send('Привет от GET')
+  // res.send('Привет от GET')
+  throw new Error("ERRORRRRR!!!!")
 })
 
 app.use('/user', userRouter);
+
+app.use((err, req, res, next) => {
+  res.status(401).send(err.message)
+})
 
 app.listen(port, () => {
   console.log(`Сервер запущен на http://localhost:${port}`)
